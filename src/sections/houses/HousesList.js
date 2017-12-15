@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, Button, StyleSheet } from 'react-native'
 import { AsyncCalls, Colors } from 'react_native_app/src/commons'
-//import * as WebServices from 'react_native_app/src/webservices/webservices'
-import { configureAxios } from 'react_native_app/src/webservices/webservices'
+import * as WebServices from 'react_native_app/src/webservices/webservices'
 
 export default class HousesList extends Component {
 
