@@ -12,11 +12,11 @@ import * as webservices from 'react_native_app/src/webservices/webservices'
 
 
 /********************** REDUX **********************/
-import { createStore, applyMiddleware, combineReducers} from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import * as reducers from 'react_native_app/src/redux/reducers' //nuestros reducers
-const reducer  = combineReducers(reducers) // combinamos nuestros reducers
+const reducer = combineReducers(reducers) // combinamos nuestros reducers
 const store = createStore( // creamos el store 
   reducer,
   applyMiddleware(thunk)
@@ -28,7 +28,7 @@ export default class App extends Component {
 
   componentWillMount() {
     webservices.configureAxios()
-     StatusBar.setBarStyle('light-content')
+    StatusBar.setBarStyle('light-content')
   }
 
   render() {

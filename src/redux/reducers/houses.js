@@ -15,6 +15,11 @@ export default function reducer(state = initalState, action = {}){
                 ...state,
                 list: action.value
             };
+        case types.HOUSES_UPDATE_SELECTED:
+            return {
+                ...state,
+                item: action.value
+            };
         default:
             return state;  
     }

@@ -17,9 +17,20 @@ export function fetchHousesList() { // funcion que carga del WS el listado de ca
         }).catch(error => {
             console.log("error: ", error)
         })
+    }
+}
 
+function updateSelectedHouse(value){
+    return {
+        type: types.HOUSES_UPDATE_SELECTED,
+        value
+    }
+}
+
+export function updateSelected(house) {
+    return (dispatch, getState) => {
+        
+        dispatch(updateSelectedHouse(house))
         
     }
-
-    
 }

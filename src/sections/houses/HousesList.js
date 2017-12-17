@@ -10,12 +10,13 @@ import * as HousesActions from 'react_native_app/src/redux/actions/houses'
 class HousesList extends Component {
 
     componentWillMount() {
-       
+
         this.props.fetchHousesList()
     }
 
     onSelect(house){
-         
+
+         this.props.updateSelected(house)
     }
 
     renderItem(item, index) {
@@ -31,7 +32,7 @@ class HousesList extends Component {
 
         return (
             <View style={styles.container}>
-
+                <Text style={{color: 'white'}}>Selected: { this.props.item ? this.props.item.nombre : '' }</Text>
                 <FlatList
                     numColumns={2}
                     data={this.props.list}
@@ -45,8 +46,10 @@ class HousesList extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('state: ', state)
     return {
-        list: state.houses.list
+        list: state.houses.list,
+        item: state.houses.item
     }
 }
 
@@ -54,7 +57,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchHousesList: () => {
             dispatch(HousesActions.fetchHousesList())
-            
+        },
+        updateSelected: (house) => {
+            dispatch(HousesActions.updateSelected(house))
         }
     }
 } 
