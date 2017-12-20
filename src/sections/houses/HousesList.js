@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { AsyncCalls, Colors } from 'react_native_app/src/commons'
 import HousesCell from './HousesCell'
+import { Actions } from 'react-native-router-flux'
 
 // Redux
 import { connect } from 'react-redux'
@@ -12,12 +13,7 @@ class HousesList extends Component {
     componentWillMount() {
 
         this.props.fetchHousesList()
-    }
-
-    onSelect(house) {
-
-        this.props.updateSelected(house)
-    }
+    } 
 
     renderFooter() {
 
@@ -26,6 +22,11 @@ class HousesList extends Component {
             size='large'
             color='#FABADA'
             style={{ marginVertical: 20 }} />
+    }
+
+    onSelect(house) {
+
+        this.props.updateSelected(house)
     }
 
     renderItem(item, index) {
@@ -58,8 +59,8 @@ class HousesList extends Component {
 const mapStateToProps = (state) => {
     console.log('state: ', state)
     return {
+
         list: state.houses.list,
-        item: state.houses.item,
         isFetching: state.houses.isFetching
     }
 }
@@ -70,7 +71,8 @@ const mapDispatchToProps = (dispatch, props) => {
             dispatch(HousesActions.fetchHousesList())
         },
         updateSelected: (house) => {
-            dispatch(HousesActions.updateSelected(house))
+            dispatch(HousesActions.updateHouseSelected(house))
+            Actions.CharactersList()
         }
     }
 }
@@ -82,7 +84,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'rgb(42,42,42)',
-        paddingVertical: 30
+        paddingVertical: 30,
+        paddingTop: 40 
     }
 
 })
