@@ -10,27 +10,30 @@ function updateHousesList(value) {
 export function fetchHousesList() { // funcion que carga del WS el listado de casas
     return (dispatch, getState) => { 
 
-        fetchAlternativo('/casas').then(response => {
+        dispatch(setHousesFetching(true))
+        const fetchUrl= '/casas'
+        fetchAlternativo(fetchUrl).then(response => {
+            dispatch(setHousesFetching(false))
             console.log("fetch response: ", response)
             const list = response.records
             dispatch(updateHousesList(list))
         }).catch(error => {
             console.log("error: ", error)
+            dispatch(setHousesFetching(false))
         })
     }
 }
 
-function updateSelectedHouse(value){
-    return {
-        type: types.HOUSES_UPDATE_SELECTED,
-        value
+function setHousesFetching(value) {
+    return{
+        type: types.HOUSES_SET_FETCHING,
+        value: value
     }
 }
 
-export function updateSelected(house) {
-    return (dispatch, getState) => {
-        
-        dispatch(updateSelectedHouse(house))
-        
+export function updateHouseSelected(value) {
+    return {
+        type: types.HOUSES_UPDATE_SELECTED,
+        value
     }
 }

@@ -20,6 +20,11 @@ export default function reducer(state = initalState, action = {}){
                 ...state,
                 item: action.value
             };
+        case types.HOUSES_SET_FETCHING:
+            return {
+                ...state,
+               isFetching: action.value
+            };
         default:
             return state;  
     }

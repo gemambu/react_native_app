@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import { AsyncCalls, Colors } from 'react_native_app/src/commons'
 import HousesCell from './HousesCell'
 
@@ -14,16 +14,25 @@ class HousesList extends Component {
         this.props.fetchHousesList()
     }
 
-    onSelect(house){
+    onSelect(house) {
 
-         this.props.updateSelected(house)
+        this.props.updateSelected(house)
+    }
+
+    renderFooter() {
+
+        return <ActivityIndicator
+            animating={this.props.isFetching}
+            size='large'
+            color='#FABADA'
+            style={{ marginVertical: 20 }} />
     }
 
     renderItem(item, index) {
         return (
-            <HousesCell 
-                item = { item }
-                onSelect={ (house) => this.onSelect(house)}
+            <HousesCell
+                item={item}
+                onSelect={(house) => this.onSelect(house)}
             />
         )
     }
@@ -32,10 +41,11 @@ class HousesList extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={{color: 'white'}}>Selected: { this.props.item ? this.props.item.nombre : '' }</Text>
+                <Text style={{ color: 'white' }}>Selected: {this.props.item ? this.props.item.nombre : ''}</Text>
                 <FlatList
                     numColumns={2}
                     data={this.props.list}
+                    ListFooterComponent={() => this.renderFooter()}
                     renderItem={({ item, index }) => this.renderItem(item, index)}
                     keyExtractor={(item, index) => item.id}
                     extraData={this.state}
@@ -49,7 +59,8 @@ const mapStateToProps = (state) => {
     console.log('state: ', state)
     return {
         list: state.houses.list,
-        item: state.houses.item
+        item: state.houses.item,
+        isFetching: state.houses.isFetching
     }
 }
 
@@ -62,9 +73,9 @@ const mapDispatchToProps = (dispatch, props) => {
             dispatch(HousesActions.updateSelected(house))
         }
     }
-} 
+}
 
-export default  connect(mapStateToProps, mapDispatchToProps)(HousesList)
+export default connect(mapStateToProps, mapDispatchToProps)(HousesList)
 
 const styles = StyleSheet.create({
 
