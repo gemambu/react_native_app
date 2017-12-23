@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { Actions, Scene, Router } from 'react-native-router-flux';
 import * as webservices from 'react_native_app/src/webservices/webservices'
+import { Colors } from 'react_native_app/src/commons'
 
 /********************** COMPONENTS **********************/
 import HousesList from 'react_native_app/src/sections/houses/HousesList'
@@ -19,9 +20,9 @@ import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import * as reducers from 'react_native_app/src/redux/reducers' //nuestros reducers
 const reducer = combineReducers(reducers) // combinamos nuestros reducers
-const store = createStore( // creamos el store 
-  reducer,
-  applyMiddleware(thunk)
+const store = createStore( // creamos el store  con:
+  reducer, // nuestros reducer
+  applyMiddleware(thunk) // nuestro middleware redux-thunk
 )
 /***************************************************/
 
@@ -60,6 +61,6 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: 'rgb(36, 36, 36)',
+    backgroundColor: Colors.navBar,
   }
 });

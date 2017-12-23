@@ -44,12 +44,13 @@ class HousesList extends Component {
             <View style={styles.container}>
                 <Text style={{ color: 'white' }}>Selected: {this.props.item ? this.props.item.nombre : ''}</Text>
                 <FlatList
-                    numColumns={2}
+                
                     data={this.props.list}
                     ListFooterComponent={() => this.renderFooter()}
                     renderItem={({ item, index }) => this.renderItem(item, index)}
                     keyExtractor={(item, index) => item.id}
-                    extraData={this.state}
+                    extraData={this.props}
+                    numColumns={2}
                 />
             </View>
         )
@@ -72,7 +73,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateSelected: (house) => {
             dispatch(HousesActions.updateHouseSelected(house))
-            Actions.CharactersList()
+            Actions.CharactersList( { title: house.nombre } )
         }
     }
 }
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor: 'rgb(42,42,42)',
+        backgroundColor: Colors.background,
         paddingVertical: 30,
         paddingTop: 40 
     }
