@@ -15,13 +15,21 @@ class HousesList extends Component {
         this.props.fetchHousesList()
     } 
 
-    renderFooter() {
-
-        return <ActivityIndicator
-            animating={this.props.isFetching}
-            size='large'
-            color='#FABADA'
-            style={{ marginVertical: 20 }} />
+    renderHeader() {
+        if(this.props.isFetching){
+            return (
+                <View>
+                    <ActivityIndicator
+                    animating={this.props.isFetching}
+                    size='large'
+                    color='#FABADA'
+                    style={{ marginVertical: 20 }} />
+                </View>
+            )
+        } else {
+            return null
+        }
+        
     }
 
     onSelect(house) {
@@ -46,7 +54,7 @@ class HousesList extends Component {
                 <FlatList
                 
                     data={this.props.list}
-                    ListFooterComponent={() => this.renderFooter()}
+                    ListHeaderComponent={() => this.renderHeader()}
                     renderItem={({ item, index }) => this.renderItem(item, index)}
                     keyExtractor={(item, index) => item.id}
                     extraData={this.props}

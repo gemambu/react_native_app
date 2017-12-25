@@ -3,6 +3,7 @@ import { FlatList, View, StyleSheet } from 'react-native'
 import { Colors } from 'react_native_app/src/commons'
 import { connect } from 'react-redux'
 import * as CharactersActions from 'react_native_app/src/redux/actions/characters'
+import { Actions } from 'react-native-router-flux'
 import CharacterCell from './CharacterCell'
 
 class CharactersList extends Component {
@@ -18,12 +19,8 @@ class CharactersList extends Component {
     }
 
     renderItem(item, index) {
-        return (
-            <CharacterCell
-                item={item}
-                onSelect={(character) => this.onSelect(character)}
-            />
-        )
+        return <CharacterCell item={item} onSelect={(character) => this.onSelect(character)}/>
+        
     }
 
     render() {
@@ -42,8 +39,9 @@ class CharactersList extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        house   : state.houses.item,
-        list    : state.characters.list
+        house       : state.houses.item,
+        list        : state.characters.list,
+        character   : state.characters.item
     }
 }
 
@@ -54,7 +52,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         updateSelected: (character) => {
             dispatch(CharactersActions.updateCharacterSelected(character))
-//            Actions.CharactersList( { title: house.nombre } )
+            Actions.CharacterView( { title: character.nombre} )
         }
     }
 }

@@ -51,10 +51,35 @@ export function post(url, data){
     })
 }
 
-
-
 export function postAlternativo(url, data) {
     return axios.post(url, data).then((response) => {
+        return response.data
+    }).catch((error) => {
+       
+        throw error
+    });
+}
+
+export function remove(url, data){
+    
+    return new Promise(function(resolve, reject) {
+
+        axios.delete(url, data).then( response => {
+
+            if (response.data)
+                resolve( response.data )
+            else
+                reject( response )
+
+        }).catch( error => {
+            reject( error )
+        });
+
+    })
+}
+
+export function removeAlternativo(url, data) {
+    return axios.delete(url, data).then((response) => {
         return response.data
     }).catch((error) => {
        

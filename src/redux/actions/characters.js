@@ -1,5 +1,6 @@
 import * as types from '../types/characters'
-import { fetchAlternativo, postAlternativo } from 'react_native_app/src/webservices/webservices'
+import { fetchAlternativo, postAlternativo, remove } from 'react_native_app/src/webservices/webservices'
+import { Actions } from 'react-native-router-flux'
 
 function updateCharactersList(value) {
     return {
@@ -31,12 +32,44 @@ export function fetchCharactersList(houseId) { // funcion que carga del WS el li
         
         const fetchUrl= '/personajes?casa=' + houseId
         fetchAlternativo(fetchUrl).then(response => {
-            dispatch(setCharactersFetching(false))
+
             console.log("fetch response: ", response)
+
+            dispatch(setCharactersFetching(false))
             dispatch(updateCharactersList(response.records))
         }).catch(error => {
-            console.log("error: ", error)
+
+            console.log("fetchCharactersList error: ", error)
+
             dispatch(setCharactersFetching(false))
         })
+    }
+}
+
+export function deleteCharacter(character) {
+    return  (dispatch, getState) => {
+        
+        dispatch(setCharactersFetching(true))
+        const state = getState()
+        const house = state.houses.item
+
+        const fetchUrl = '/personajes/' + character.id
+        remove(fetchUrl).then( response => {
+            
+            dispatch(setCharactersFetching(false))
+            console.log("deleteCharacter response: ", response)
+
+            if(response.status && response.status == "ok"){
+
+                dispatch(fetchCharactersList(house.id))
+                dispatch(updateCharacterSelected(null))
+                Actions.pop()
+            }
+        }).catch( error => {
+
+            dispatch(setCharactersFetching(false))
+            console.log("deleteCharacter error: ", error)
+        })
+
     }
 }
