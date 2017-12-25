@@ -16,10 +16,36 @@ function setCharactersFetching(value) {
     }
 }
 
-export function updateCharacterSelected(value) {
+export function updateCharacterSelected(character) {
     return {
         type: types.CHARACTERS_UPDATE_SELECTED,
-        value
+        character
+    }
+}
+
+export function postCharacter(data) {
+    return (dispatch, getState) => {
+        console.log('postCharacter response: ', data)
+        dispatch(setCharactersFetching(true))
+        const state = getState()
+        const house = state.houses.item
+
+        const fetchUrl = '/personajes'
+        post(fetchUrl, data).then( response => {
+
+            dispatch(setCharactersFetching(false))
+            console.log("postCharacter response: ", response)
+
+            if (response.record) {
+                dispatch(fetchCharactersList(house.id))
+                dispatch(updateCharacterSelected(null))
+                Actions.pop()
+            }
+
+        }).catch( error => {
+            dispatch(setCharactersFetching(false))
+            console.log("postCharacter error: ", error)
+        })
     }
 }
 

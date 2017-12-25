@@ -30,7 +30,11 @@ class CharacterView extends Component {
                     <Text style={styles.age}>{ 'Edad: ' + edad }</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button label={'Eliminar'} onPress= { () => this.onDelete(character)}/>
+                    <Button 
+                        label       = { 'Eliminar' } 
+                        onPress     = { () => this.onDelete(character) }
+                        isFetching  = { this.props.isFetching }    
+                    />
                 </View>
 
             </View>

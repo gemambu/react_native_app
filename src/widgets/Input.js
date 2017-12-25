@@ -29,7 +29,7 @@ export default class Input extends Component {
                     underlineColorAndroid   = { 'transparent' }
                 />
 
-                {this.props.error ? <Text style={[styles.error, this.props.errorStyle]}>{this.props.error}</Text> : null}
+                { this.props.error ? <Text style={[styles.error, this.props.errorStyle]}>{this.props.error}</Text> : null }
             </View>
         )
     }
