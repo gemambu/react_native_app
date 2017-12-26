@@ -8,13 +8,14 @@ import * as CharactersAction from 'react_native_app/src/redux/actions/characters
 class CharacterView extends Component {
 
     onDelete(character) {
+        console.log('props onDelete: ', character)
         this.props.deleteCharacter(character)
     }
 
     render(){
-        const {character} = this.props
-        const nombre = character.nombre ? character.nombre : ''
-        const edad = character.edad ? character.edad : ''
+        const { character } = this.props
+        const nombre = character ? character.nombre : ''
+        const edad = character ? character.edad : ''
         const image = character && character.image_dir ? 
             { uri: character.image_dir } : 
             require('react_native_app/src/resources/placeholder.png')   
@@ -30,11 +31,9 @@ class CharacterView extends Component {
                     <Text style={styles.age}>{ 'Edad: ' + edad }</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button 
-                        label       = { 'Eliminar' } 
-                        onPress     = { () => this.onDelete(character) }
-                        isFetching  = { this.props.isFetching }    
-                    />
+                    <Button label={'Eliminar'} 
+                        onPress={ () => this.onDelete(character) } 
+                        isFetching={this.props.isFetching} />
                 </View>
 
             </View>
@@ -51,6 +50,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         deleteCharacter: (character) => {
+            console.log('action deleteCharacter: ', character)
             character && dispatch(CharactersAction.deleteCharacter(character))
         },
     }

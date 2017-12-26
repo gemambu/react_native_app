@@ -1,5 +1,5 @@
 import * as types from '../types/characters'
-import { fetchAlternativo, postAlternativo, remove } from 'react_native_app/src/webservices/webservices'
+import { fetchAlternativo, postAlternativo, remove, post } from 'react_native_app/src/webservices/webservices'
 import { Actions } from 'react-native-router-flux'
 
 function updateCharactersList(value) {
@@ -74,6 +74,7 @@ export function fetchCharactersList(houseId) { // funcion que carga del WS el li
 
 export function deleteCharacter(character) {
     return  (dispatch, getState) => {
+        
         
         dispatch(setCharactersFetching(true))
         const state = getState()
